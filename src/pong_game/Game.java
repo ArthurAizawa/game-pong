@@ -1,14 +1,17 @@
 package pong_game;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable {
+public class Game extends Canvas implements Runnable, KeyListener {
 	
 	private static final long serialVersionUID = 1L;
 	public static int WIDTH = 240;
@@ -21,8 +24,8 @@ public class Game extends Canvas implements Runnable {
 	
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
-		
-		player = new Player();
+		this.addKeyListener(this);
+		player = new Player(100, HEIGHT-10);
 	}
 	
 	public static void main(String[] args) {
@@ -40,7 +43,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void tick() {
-		
+		player.tick();
 	}
 	
 	public void render() {
@@ -50,6 +53,8 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		Graphics g = layer.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
 		player.render(g);
 		
 		
@@ -71,6 +76,34 @@ public class Game extends Canvas implements Runnable {
 			} catch(InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			player.right = true;
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+			player.left = true;
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			player.right = false;
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+			player.left = false;
 		}
 		
 	}
