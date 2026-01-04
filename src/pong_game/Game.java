@@ -20,9 +20,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	
 	public BufferedImage layer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
 
-	public Player player;
-	public Enemy enemy;
-	public Ball ball;
+	public static Player player;
+	public static Enemy enemy;
+	public static Ball ball;
 	
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
