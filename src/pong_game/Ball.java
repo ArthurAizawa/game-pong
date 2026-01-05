@@ -10,7 +10,7 @@ public class Ball {
 	public double x, y;
 	public int width, height;
 	public double dx, dy;
-	public double speed = 0.9;
+	public double speed = 1.6;
 	
 	public Ball(int x, int y) {
 		this.x = x;
@@ -18,8 +18,10 @@ public class Ball {
 		this.width = 3; // com o scale 3 = 9
 		this.height = 3;
 		
-		dx = new Random().nextGaussian();
-		dy = new Random().nextGaussian();
+
+		int angle = new Random().nextInt(120-45) + 46;
+		dx = Math.cos(Math.toRadians(angle));
+		dy = Math.sin(Math.toRadians(angle));
 	}
 	
 	public void tick() {
@@ -31,9 +33,13 @@ public class Ball {
 		}
 		
 		if(y >= Game.HEIGHT) {
-			//ponto do adversario
+			System.out.println("Ponto do bot");
+			new Game();
+			return;
 		} else if(y < 0) {
-			//PONTO DO PLAYER
+			System.out.println("Ponto do player");
+			new Game();
+			return;
 		}
 		
 		Rectangle bounds = new Rectangle((int)(x+(dx*speed)), (int)(y+(dy*speed)), width, height);
@@ -42,9 +48,17 @@ public class Ball {
 		Rectangle boundsEnemy = new Rectangle((int)Game.enemy.x, (int)Game.enemy.y, Game.enemy.width, Game.enemy.height);
 		
 		if(bounds.intersects(boundsPlayer)) {
-			dy *= -1;
+			int angle = new Random().nextInt(120-45) + 46;
+			dx = Math.cos(Math.toRadians(angle));
+			dy = Math.sin(Math.toRadians(angle));
+			if(y > 0) 
+				dy *= -1;
 		} else if(bounds.intersects(boundsEnemy)) {
-			dy *= -1;
+			int angle = new Random().nextInt(120-45) + 46;
+			dx = Math.cos(Math.toRadians(angle));
+			dy = Math.sin(Math.toRadians(angle));
+			if(y < 0)
+				dy *= -1;
 		}
 		
 		x+=dx*speed;

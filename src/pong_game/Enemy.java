@@ -11,12 +11,12 @@ public class Enemy {
 	public Enemy(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.width = 40;
-		this.height = 10;
+		this.width = 30;
+		this.height = 5;
 	}
 
 	public void tick() {
-		x += (Game.ball.x - x - 6);
+		x += (Game.ball.x - x - 6) * 0.1;
 
 		// barreira da tela
 		if (x + width > Game.WIDTH) {
